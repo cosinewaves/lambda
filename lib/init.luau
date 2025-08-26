@@ -1,6 +1,11 @@
 --!nocheck
 -- init.lua
 
+if not game then
+	warn("(lambda) unfortunately, lambda only supports roblox")
+	return nil
+end
+
 -- types
 export type Status = "Started" | "Resolved" | "Rejected" | "Cancelled"
 
