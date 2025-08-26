@@ -1,7 +1,7 @@
 > [!IMPORTANT]
 > **This module depends on a working lua Promise implementation (such as [`evaera/roblox-lua-promise`](https://github.com/evaera/roblox-lua-promise) ) - make sure you’ve required it correctly inside the library**
 
-## ⚙️ **Lambda**
+## **λ Lambda**
 A lightweight lifecycle orchestrator for ModuleScripts. Lambda ensures a consistent init → start boot process across a list of modules, with full Promise support for async initialisation.
 
 ---
