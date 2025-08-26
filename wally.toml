@@ -1,6 +1,6 @@
 [package]
 name = "cosinewaves/lambda"
-description = "a lightweight, lifecycle-aware module loader for roblox"
+description = "A lightweight lifecycle orchestrator"
 version = "0.1.1"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
