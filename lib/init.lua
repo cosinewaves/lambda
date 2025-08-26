@@ -130,7 +130,7 @@ return function(modules: { ModuleScript }): TypedPromise<nil>
 	-- check promise
 	if not PromiseLibrary then
 		warn("(lambda) did you properly write the path to your Promise library?")
-		return
+		return nil
 	end
 
 	local requiredModules: { LambdaModule } = {}
