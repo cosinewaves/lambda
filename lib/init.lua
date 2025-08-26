@@ -1,5 +1,5 @@
 --!nocheck
--- lambda.lua
+-- init.lua
 
 -- types
 export type Status = "Started" | "Resolved" | "Rejected" | "Cancelled"
