@@ -10,7 +10,6 @@ A lightweight lifecycle orchestrator for ModuleScripts. Lambda ensures a consist
 
 - 🔁 **Consistent Lifecycle**: Each module can optionally export `init()` and `start()` for structured loading.
 - ⏳ **Async Safety**: Modules are `required` safely, and `start()` is deferred until `init()` of all modules is complete.
-- 🧩 **Dependency Coordination**: Use `waitFor("ModuleName")` to safely depend on another module’s completion.
 - 📦 **Batch Loading**: Load all children or descendant `ModuleScripts` from a container.
 
 ---
