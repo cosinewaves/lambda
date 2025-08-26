@@ -149,6 +149,16 @@ return function(modules: { ModuleScript }): TypedPromise<nil>
 		end
 	end
 
+	-- sort requiredModules by priority descending (default 1)
+	-- 2 would require before 1
+	table.sort(requiredModules, function(a, b)
+		local pa = rawget(a, "priority")
+		local pb = rawget(b, "priority")
+		pa = (typeof(pa) == "number") and pa or 1
+		pb = (typeof(pb) == "number") and pb or 1
+		return pa > pb
+	end)
+
 	-- run all init
 	local initPromises: { TypedPromise<any> } = {}
 	for _: number, m: LambdaModule in ipairs(requiredModules) do
