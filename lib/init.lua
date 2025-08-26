@@ -1,5 +1,4 @@
 --!nocheck
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 -- init.lua
 
 -- types
@@ -126,7 +125,7 @@ type LambdaModule = {
 
 -- promise library
 local PromiseLibrary = require(
-	script.Parent.Promise or game:GetService(ReplicatedStorage):FindFirstDescendant("Promise")
+	script.Parent.Promise or game:GetService("ReplicatedStorage"):FindFirstDescendant("Promise")
 ) :: PromiseLibrary -- path to your promise library
 
 return function(modules: { ModuleScript }): TypedPromise<nil>
