@@ -154,8 +154,8 @@ return function(modules: { ModuleScript }): TypedPromise<nil>
 	table.sort(requiredModules, function(a, b)
 		local pa = rawget(a, "priority")
 		local pb = rawget(b, "priority")
-		pa = (typeof(pa) == "number") and pa or 1
-		pb = (typeof(pb) == "number") and pb or 1
+		pa = (typeof(pa) == "number") and math.abs(pa) or 1
+		pb = (typeof(pb) == "number") and math.abs(pb) or 1
 		return pa > pb
 	end)
 
