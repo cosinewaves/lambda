@@ -115,9 +115,6 @@ type PromiseLibrary = {
 	try: <TArgs..., TReturn...>(callback: (TArgs...) -> TReturn..., TArgs...) -> TypedPromise<TReturn...>,
 }
 
--- promise library
-local PromiseLibrary = require(script.Parent.promise) :: PromiseLibrary
-
 -- interface
 type LambdaModule = {
 	init: (() -> () | TypedPromise<any>)?,
@@ -125,8 +122,17 @@ type LambdaModule = {
 	[string]: any,
 }
 
+-- promise library
+local PromiseLibrary = require(script.Parent.Promise) :: PromiseLibrary -- path to your promise library
+
 -- api
 return function(modules: { ModuleScript }): TypedPromise<nil>
+	-- check promise
+	if not PromiseLibrary then
+		warn("(lambda) did you properly write the path to your Promise library?")
+		return
+	end
+
 	local requiredModules: { LambdaModule } = {}
 
 	-- require + collect

@@ -1,5 +1,5 @@
 [package]
-name = "adnan/lambda"
+name = "cosinewaves/lambda"
 description = "a lightweight, lifecycle-aware module loader for roblox"
 version = "0.1.0"
 registry = "https://github.com/UpliftGames/wally-index"
