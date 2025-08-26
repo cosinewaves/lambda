@@ -151,11 +151,11 @@ return function(modules: { ModuleScript }): TypedPromise<nil>
 
 	-- sort requiredModules by priority descending (default 1)
 	-- 2 would require before 1
-	table.sort(requiredModules, function(a, b)
-		local pa = rawget(a, "priority")
-		local pb = rawget(b, "priority")
-		pa = (typeof(pa) == "number") and math.abs(pa) or 1
-		pb = (typeof(pb) == "number") and math.abs(pb) or 1
+	table.sort(requiredModules, function(a: LambdaModule, b: LambdaModule): boolean
+		local pa: number? = rawget(a, "priority")
+		local pb: number? = rawget(b, "priority")
+		pa = (typeof(pa) == "number") and math.abs(pa :: number) or 1
+		pb = (typeof(pb) == "number") and math.abs(pb :: number) or 1
 		return pa > pb
 	end)
 
