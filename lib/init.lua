@@ -133,6 +133,12 @@ return function(modules: { ModuleScript }): TypedPromise<nil>
 		return nil
 	end
 
+	-- check args
+	if not modules then
+		warn("(lambda) did you properly pass your modules table?")
+		return nil
+	end
+
 	local requiredModules: { LambdaModule } = {}
 
 	-- require + collect
