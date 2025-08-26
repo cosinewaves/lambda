@@ -129,7 +129,6 @@ local PromiseLibrary = require(
 	script.Parent.Promise or game:GetService(ReplicatedStorage):FindFirstDescendant("Promise")
 ) :: PromiseLibrary -- path to your promise library
 
--- api
 return function(modules: { ModuleScript }): TypedPromise<nil>
 	-- check promise
 	if not PromiseLibrary then
