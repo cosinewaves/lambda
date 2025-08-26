@@ -182,8 +182,6 @@ return function(modules: { ModuleScript }): TypedPromise<nil>
 			else
 				table.insert(initPromises, PromiseLibrary.reject(res))
 			end
-		else
-			print("not func")
 		end
 	end
 
