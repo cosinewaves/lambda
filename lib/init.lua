@@ -120,6 +120,7 @@ type PromiseLibrary = {
 type LambdaModule = {
 	init: (() -> () | TypedPromise<any>)?,
 	start: (() -> () | TypedPromise<any>)?,
+	priority: number?,
 	[string]: any,
 }
 
