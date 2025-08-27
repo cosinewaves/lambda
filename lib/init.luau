@@ -129,9 +129,7 @@ type LambdaModule = {
 }
 
 -- promise library
-local PromiseLibrary = require(
-	script.Parent.Promise or game:GetService("ReplicatedStorage"):FindFirstDescendant("Promise")
-) :: PromiseLibrary -- path to your promise library
+local PromiseLibrary = require("./DevPackages/promise") :: PromiseLibrary -- path to your promise library
 
 return function(modules: { ModuleScript }): TypedPromise<nil>
 	-- check promise
