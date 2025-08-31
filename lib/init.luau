@@ -57,15 +57,6 @@ export type TypedPromise<T...> = {
 	timeout: (self: Promise, seconds: number, rejectionValue: any?) -> Promise,
 }
 
-type Signal<T...> = {
-	Connect: (self: Signal<T...>, callback: (T...) -> ...any) -> SignalConnection,
-}
-
-type SignalConnection = {
-	Disconnect: (self: SignalConnection) -> ...any,
-	[any]: any,
-}
-
 type PromiseLibrary = {
 	Error: any,
 
