@@ -120,7 +120,7 @@ type LambdaModule = {
 }
 
 -- promise library
-local PromiseLibrary = require(script.Parent.Parent.promise) :: PromiseLibrary -- path to your promise library
+local PromiseLibrary = require(script.Parent.Parent.Parent.promise) :: PromiseLibrary -- path to your promise library
 
 return function(modules: { ModuleScript }): TypedPromise<nil>
 	-- check promise
