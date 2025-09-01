@@ -4,7 +4,7 @@ registry = "test"
 
 [[package]]
 name = "cosinewaves/lambda"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [["promise", "evaera/promise@4.0.0"]]
 
 [[package]]

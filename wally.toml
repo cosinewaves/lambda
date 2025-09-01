@@ -6,5 +6,5 @@ registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 license = "MIT"
 
-[dev-dependencies]
+[dependencies]
 promise = "evaera/promise@4.0.0"
