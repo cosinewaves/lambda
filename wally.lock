@@ -4,10 +4,15 @@ registry = "test"
 
 [[package]]
 name = "cosinewaves/lambda"
-version = "0.1.2"
-dependencies = [["promise", "evaera/promise@4.0.0"]]
+version = "0.1.1"
+dependencies = [["Promise", "lukadev-0/typed-promise@4.0.2"]]
 
 [[package]]
 name = "evaera/promise"
 version = "4.0.0"
 dependencies = []
+
+[[package]]
+name = "lukadev-0/typed-promise"
+version = "4.0.2"
+dependencies = [["Promise", "evaera/promise@4.0.0"]]

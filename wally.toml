@@ -7,4 +7,4 @@ realm = "shared"
 license = "MIT"
 
 [dependencies]
-promise = "evaera/promise@4.0.0"
+Promise = "lukadev-0/typed-promise@4.0.2"
