@@ -16,7 +16,7 @@ type LambdaModule = {
 	[string]: any, -- other keys
 }
 
-return function(modules: { ModuleScript }): () -- bye returns
+local function lambda(modules: { ModuleScript }): ()
 	-- check promise
 	if not PromiseLibrary then
 		warn("(lambda) did you properly write the path to your Promise library?")
@@ -98,3 +98,5 @@ return function(modules: { ModuleScript }): () -- bye returns
 		end)
 	return
 end
+
+return lambda
