@@ -1,10 +1,13 @@
 --!nocheck
--- init.lua
+-- init.luau
 
 if not game then
 	warn("(lambda) unfortunately, lambda only supports roblox")
 	return nil
 end
+
+-- promise library
+local PromiseLibrary = require(script.Parent.Promise)
 
 type Promise = PromiseLibrary.Promise
 
@@ -16,10 +19,7 @@ type LambdaModule = {
 	[string]: any,
 }
 
--- promise library
-local PromiseLibrary = require(script.Parent.Promise)
-
-return function(modules: { ModuleScript }): PromiseLibrary.Promise
+return function(modules: { ModuleScript }): Promise
 	-- check promise
 	if not PromiseLibrary then
 		warn("(lambda) did you properly write the path to your Promise library?")
