@@ -40,12 +40,10 @@ Each module you load can optionally export:
 
 `init(): () | Promise`
 - Called immediately after `require()`.
-- Can return a Promise for async setup.
 - All `init()` methods are awaited before any `start()`.
 
 `start(): () | Promise`
 - Called after every module’s `init()` has resolved.
-- Can return a Promise for async startup.
 
 > [!TIP]
 > Both lifecycle functions are optional, you can mix and match.
