@@ -1,2 +1,3 @@
-sourcemap.json
-/DevPackages
+/Packages
+/wally.lock
+/sourcemap.json

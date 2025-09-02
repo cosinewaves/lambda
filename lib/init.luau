@@ -1,128 +1,22 @@
 --!nocheck
--- init.lua
+-- init.luau
 
 if not game then
 	warn("(lambda) unfortunately, lambda only supports roblox")
 	return nil
 end
 
--- types
-export type Status = "Started" | "Resolved" | "Rejected" | "Cancelled"
-
-export type Promise = {
-	andThen: (
-		self: Promise,
-		successHandler: (...any) -> ...any,
-		failureHandler: ((...any) -> ...any)?
-	) -> Promise,
-	andThenCall: <TArgs...>(self: Promise, callback: (TArgs...) -> ...any, TArgs...) -> any,
-	andThenReturn: (self: Promise, ...any) -> Promise,
-
-	await: (self: Promise) -> (boolean, ...any),
-	awaitStatus: (self: Promise) -> (Status, ...any),
-
-	cancel: (self: Promise) -> (),
-	catch: (self: Promise, failureHandler: (...any) -> ...any) -> Promise,
-	expect: (self: Promise) -> ...any,
-
-	finally: (self: Promise, finallyHandler: (status: Status) -> ...any) -> Promise,
-	finallyCall: <TArgs...>(self: Promise, callback: (TArgs...) -> ...any, TArgs...) -> Promise,
-	finallyReturn: (self: Promise, ...any) -> Promise,
-
-	getStatus: (self: Promise) -> Status,
-	now: (self: Promise, rejectionValue: any?) -> Promise,
-	tap: (self: Promise, tapHandler: (...any) -> ...any) -> Promise,
-	timeout: (self: Promise, seconds: number, rejectionValue: any?) -> Promise,
-}
-
-export type TypedPromise<T...> = {
-	andThen: (self: Promise, successHandler: (T...) -> ...any, failureHandler: ((...any) -> ...any)?) -> Promise,
-	andThenCall: <TArgs...>(self: Promise, callback: (TArgs...) -> ...any, TArgs...) -> Promise,
-	andThenReturn: (self: Promise, ...any) -> Promise,
-
-	await: (self: Promise) -> (boolean, T...),
-	awaitStatus: (self: Promise) -> (Status, T...),
-
-	cancel: (self: Promise) -> (),
-	catch: (self: Promise, failureHandler: (...any) -> ...any) -> Promise,
-	expect: (self: Promise) -> T...,
-
-	finally: (self: Promise, finallyHandler: (status: Status) -> ...any) -> Promise,
-	finallyCall: <TArgs...>(self: Promise, callback: (TArgs...) -> ...any, TArgs...) -> Promise,
-	finallyReturn: (self: Promise, ...any) -> Promise,
-
-	getStatus: (self: Promise) -> Status,
-	now: (self: Promise, rejectionValue: any?) -> Promise,
-	tap: (self: Promise, tapHandler: (T...) -> ...any) -> Promise,
-	timeout: (self: Promise, seconds: number, rejectionValue: any?) -> Promise,
-}
-
-type PromiseLibrary = {
-	Error: any,
-
-	all: <T>(promises: { TypedPromise<T> }) -> TypedPromise<{ T }>,
-	allSettled: <T>(promise: { TypedPromise<T> }) -> TypedPromise<{ Status }>,
-	any: <T>(promise: { TypedPromise<T> }) -> TypedPromise<T>,
-	defer: <TReturn...>(
-		executor: (
-			resolve: (TReturn...) -> (),
-			reject: (...any) -> (),
-			onCancel: (abortHandler: (() -> ())?) -> boolean
-		) -> ()
-	) -> TypedPromise<TReturn...>,
-	delay: (seconds: number) -> TypedPromise<number>,
-	each: <T, TReturn>(
-		list: { T | TypedPromise<T> },
-		predicate: (value: T, index: number) -> TReturn | TypedPromise<TReturn>
-	) -> TypedPromise<{ TReturn }>,
-	fold: <T, TReturn>(
-		list: { T | TypedPromise<T> },
-		reducer: (accumulator: TReturn, value: T, index: number) -> TReturn | TypedPromise<TReturn>
-	) -> TypedPromise<TReturn>,
-	fromEvent: <TReturn...>(
-		event: Signal<TReturn...>,
-		predicate: ((TReturn...) -> boolean)?
-	) -> TypedPromise<TReturn...>,
-	is: (object: any) -> boolean,
-	new: <TReturn...>(
-		executor: (
-			resolve: (TReturn...) -> (),
-			reject: (...any) -> (),
-			onCancel: (abortHandler: (() -> ())?) -> boolean
-		) -> ()
-	) -> TypedPromise<TReturn...>,
-	onUnhandledRejection: (callback: (promise: TypedPromise<any>, ...any) -> ()) -> () -> (),
-	promisify: <TArgs..., TReturn...>(callback: (TArgs...) -> TReturn...) -> (TArgs...) -> TypedPromise<TReturn...>,
-	race: <T>(promises: { TypedPromise<T> }) -> TypedPromise<T>,
-	reject: (...any) -> TypedPromise<...any>,
-	resolve: <TReturn...>(TReturn...) -> TypedPromise<TReturn...>,
-	retry: <TArgs..., TReturn...>(
-		callback: (TArgs...) -> TypedPromise<TReturn...>,
-		times: number,
-		TArgs...
-	) -> TypedPromise<TReturn...>,
-	retryWithDelay: <TArgs..., TReturn...>(
-		callback: (TArgs...) -> TypedPromise<TReturn...>,
-		times: number,
-		seconds: number,
-		TArgs...
-	) -> TypedPromise<TReturn...>,
-	some: <T>(promise: { TypedPromise<T> }, count: number) -> TypedPromise<{ T }>,
-	try: <TArgs..., TReturn...>(callback: (TArgs...) -> TReturn..., TArgs...) -> TypedPromise<TReturn...>,
-}
-
--- interface
-type LambdaModule = {
-	init: (() -> () | TypedPromise<any>)?,
-	start: (() -> () | TypedPromise<any>)?,
-	priority: number?,
-	[string]: any,
-}
-
 -- promise library
-local PromiseLibrary = require(script.Parent.Parent.Parent.promise) :: PromiseLibrary -- path to your promise library
+local PromiseLibrary = require(script.Parent.Promise)
 
-return function(modules: { ModuleScript }): TypedPromise<nil>
+type LambdaModule = {
+	init: (() -> ())?,
+	start: (() -> ())?,
+	priority: number?,
+	[string]: any, -- other keys
+}
+
+return function(modules: { ModuleScript }): PromiseLibrary.Promise
 	-- check promise
 	if not PromiseLibrary then
 		warn("(lambda) did you properly write the path to your Promise library?")
@@ -163,13 +57,13 @@ return function(modules: { ModuleScript }): TypedPromise<nil>
 	end)
 
 	-- run all init
-	local initPromises: { TypedPromise<any> } = {}
+	local initPromises: { Promise } = {}
 	for _: number, m: LambdaModule in ipairs(requiredModules) do
 		if m.init and type(m.init) == "function" then
 			local ok, res = pcall(m.init, m)
 			if ok then
 				if PromiseLibrary.is and PromiseLibrary.is(res) then
-					table.insert(initPromises, res :: TypedPromise<any>)
+					table.insert(initPromises, res :: Promise)
 				else
 					table.insert(initPromises, PromiseLibrary.resolve(res))
 				end
@@ -182,13 +76,13 @@ return function(modules: { ModuleScript }): TypedPromise<nil>
 	-- wait for all inits, then run starts
 	return PromiseLibrary.all(initPromises)
 		:andThen(function()
-			local startPromises: { TypedPromise<any> } = {}
+			local startPromises: { Promise } = {}
 			for _, m in ipairs(requiredModules) do
 				if m.start then
 					local ok, res = pcall(m.start, m)
 					if ok then
 						if PromiseLibrary.is and PromiseLibrary.is(res) then
-							table.insert(startPromises, res :: TypedPromise<any>)
+							table.insert(startPromises, res :: Promise)
 						else
 							table.insert(startPromises, PromiseLibrary.resolve(res))
 						end

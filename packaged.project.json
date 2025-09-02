@@ -1,0 +1,9 @@
+{
+  "name": "lambda",
+  "tree": {
+    "$path": "Packages",
+    "lambda": {
+      "$path": "lib"
+    }
+  }
+}
