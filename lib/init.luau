@@ -74,7 +74,7 @@ return function(modules: { ModuleScript }): ()
 	end
 
 	-- wait for all inits, then run starts
-	return PromiseLibrary.all(initPromises)
+	PromiseLibrary.all(initPromises)
 		:andThen(function()
 			local startPromises: { Promise } = {}
 			for _, m in ipairs(requiredModules) do
@@ -91,9 +91,10 @@ return function(modules: { ModuleScript }): ()
 					end
 				end
 			end
-			return PromiseLibrary.all(startPromises)
+			PromiseLibrary.all(startPromises)
 		end)
 		:andThen(function()
-			return PromiseLibrary.resolve(nil)
+			PromiseLibrary.resolve(nil)
 		end)
+	return
 end
