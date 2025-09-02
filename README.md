@@ -30,12 +30,6 @@ local modules: {ModuleScript} = {
 }
 
 Lambda(modules)
-    :andThen(function()
-        print("✅ All services initialized and started")
-    end)
-    :catch(function(err)
-        warn("❌ Lambda failed ->", err)
-    end)
 ```
 
 ---
