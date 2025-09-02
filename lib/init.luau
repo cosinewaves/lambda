@@ -16,17 +16,17 @@ type LambdaModule = {
 	[string]: any, -- other keys
 }
 
-return function(modules: { ModuleScript }): ()
+return function(modules: { ModuleScript }): () -- bye returns
 	-- check promise
 	if not PromiseLibrary then
 		warn("(lambda) did you properly write the path to your Promise library?")
-		return nil
+		return
 	end
 
 	-- check args
 	if not modules then
 		warn("(lambda) did you properly pass your modules table?")
-		return nil
+		return
 	end
 
 	local requiredModules: { LambdaModule } = {}
@@ -36,7 +36,7 @@ return function(modules: { ModuleScript }): ()
 		if mod:IsA("ModuleScript") then
 			local ok, result = pcall(require, mod)
 			if not ok then
-				return PromiseLibrary.reject(("(lambda) failed to require %s -> %s"):format(mod.Name, result))
+				PromiseLibrary.reject(("(lambda) failed to require %s -> %s"):format(mod.Name, result))
 			end
 
 			if type(result) == "table" then
@@ -63,7 +63,7 @@ return function(modules: { ModuleScript }): ()
 			local ok, res = pcall(m.init, m)
 			if ok then
 				if PromiseLibrary.is and PromiseLibrary.is(res) then
-					table.insert(initPromises, res :: Promise)
+					table.insert(initPromises, res)
 				else
 					table.insert(initPromises, PromiseLibrary.resolve(res))
 				end
@@ -82,7 +82,7 @@ return function(modules: { ModuleScript }): ()
 					local ok, res = pcall(m.start, m)
 					if ok then
 						if PromiseLibrary.is and PromiseLibrary.is(res) then
-							table.insert(startPromises, res :: Promise)
+							table.insert(startPromises, res)
 						else
 							table.insert(startPromises, PromiseLibrary.resolve(res))
 						end
@@ -94,7 +94,7 @@ return function(modules: { ModuleScript }): ()
 			PromiseLibrary.all(startPromises)
 		end)
 		:andThen(function()
-			PromiseLibrary.resolve(nil)
+			PromiseLibrary.resolve()
 		end)
 	return
 end
