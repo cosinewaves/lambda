@@ -99,4 +99,4 @@ local function lambda(modules: { ModuleScript }): ()
 	return
 end
 
-return lambda
+return lambda :: (modules: { ModuleScript }) -> ()
