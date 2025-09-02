@@ -10,8 +10,6 @@ end
 local PromiseLibrary = require(script.Parent.Promise)
 
 type Promise = PromiseLibrary.Promise
-
--- interface
 type LambdaModule = {
 	init: (() -> ())?,
 	start: (() -> ())?,
