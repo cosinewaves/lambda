@@ -13,10 +13,10 @@ type Promise = PromiseLibrary.Promise
 
 -- interface
 type LambdaModule = {
-	init: (() -> () | TypedPromise<any>)?,
-	start: (() -> () | TypedPromise<any>)?,
+	init: (() -> ())?,
+	start: (() -> ())?,
 	priority: number?,
-	[string]: any,
+	[string]: any, -- other keys
 }
 
 return function(modules: { ModuleScript }): Promise
