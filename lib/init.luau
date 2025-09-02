@@ -6,6 +6,8 @@ if not game then
 	return nil
 end
 
+type Promise = PromiseLibrary.Promise
+
 -- interface
 type LambdaModule = {
 	init: (() -> () | TypedPromise<any>)?,
