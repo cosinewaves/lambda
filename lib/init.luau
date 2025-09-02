@@ -9,7 +9,6 @@ end
 -- promise library
 local PromiseLibrary = require(script.Parent.Promise)
 
-type Promise = PromiseLibrary.Promise
 type LambdaModule = {
 	init: (() -> ())?,
 	start: (() -> ())?,
@@ -17,7 +16,7 @@ type LambdaModule = {
 	[string]: any, -- other keys
 }
 
-return function(modules: { ModuleScript }): Promise
+return function(modules: { ModuleScript }): PromiseLibrary.Promise
 	-- check promise
 	if not PromiseLibrary then
 		warn("(lambda) did you properly write the path to your Promise library?")
