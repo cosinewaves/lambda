@@ -16,7 +16,7 @@ type LambdaModule = {
 	[string]: any, -- other keys
 }
 
-return function(modules: { ModuleScript }): PromiseLibrary.Promise
+return function(modules: { ModuleScript }): ()
 	-- check promise
 	if not PromiseLibrary then
 		warn("(lambda) did you properly write the path to your Promise library?")
