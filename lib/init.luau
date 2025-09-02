@@ -58,13 +58,13 @@ return function(modules: { ModuleScript }): Promise
 	end)
 
 	-- run all init
-	local initPromises: { TypedPromise<any> } = {}
+	local initPromises: { Promise } = {}
 	for _: number, m: LambdaModule in ipairs(requiredModules) do
 		if m.init and type(m.init) == "function" then
 			local ok, res = pcall(m.init, m)
 			if ok then
 				if PromiseLibrary.is and PromiseLibrary.is(res) then
-					table.insert(initPromises, res :: TypedPromise<any>)
+					table.insert(initPromises, res :: Promise)
 				else
 					table.insert(initPromises, PromiseLibrary.resolve(res))
 				end
@@ -77,13 +77,13 @@ return function(modules: { ModuleScript }): Promise
 	-- wait for all inits, then run starts
 	return PromiseLibrary.all(initPromises)
 		:andThen(function()
-			local startPromises: { TypedPromise<any> } = {}
+			local startPromises: { Promise } = {}
 			for _, m in ipairs(requiredModules) do
 				if m.start then
 					local ok, res = pcall(m.start, m)
 					if ok then
 						if PromiseLibrary.is and PromiseLibrary.is(res) then
-							table.insert(startPromises, res :: TypedPromise<any>)
+							table.insert(startPromises, res :: Promise)
 						else
 							table.insert(startPromises, PromiseLibrary.resolve(res))
 						end
